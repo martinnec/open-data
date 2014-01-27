@@ -1,33 +1,24 @@
 { "type": "FeatureCollection",
   "features": [
-    { "type": "Feature",
-      "geometry": {"type": "Point", "coordinates": [102.0, 0.5]},
-      "properties": {"prop0": "value0"}
-      },
-    { "type": "Feature",
-      "geometry": {
-        "type": "LineString",
-        "coordinates": [
-          [102.0, 0.0], [103.0, 1.0], [104.0, 0.0], [105.0, 1.0]
-          ]
-        },
-      "properties": {
-        "prop0": "value0",
-        "prop1": 0.0
-        }
-      },
-    { "type": "Feature",
-       "geometry": {
-         "type": "Polygon",
-         "coordinates": [
-           [ [100.0, 0.0], [101.0, 0.0], [101.0, 1.0],
-             [100.0, 1.0], [100.0, 0.0] ]
-           ]
-       },
-       "properties": {
-         "prop0": "value0",
-         "prop1": {"this": "that"}
-         }
-       }
-     ]
-   }
+    {
+      "type": "Feature",
+      "geometry": {"type": "Point", "coordinates": [0.0, 0.0]},
+      "properties": {"title": "První bod"}
+    },
+    {
+      "type": "Feature",
+      "geometry": {"type": "Point", "coordinates": [20.0, 20.0]},
+      "properties": {"title": "Druhý bod"}
+    },
+    {
+      "type": "Feature",
+      "geometry": {"type": "Point", "coordinates": [40.0, 40.0]},
+      "properties": {"title": "Třetí bod"}
+    },
+    {
+      "type": "Feature",
+      "geometry": {"type": "Point", "coordinates": [60.0, 60.0]},
+      "properties": {"title": "Čtvrtý bod"}
+    }
+  ]
+}
