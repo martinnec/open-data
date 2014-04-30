@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="cs" ng-app="kontrolyApp">
+<head>
+  <meta charset="utf-8">
+  <title>Výsledky kontrol</title>
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="css/app.css"/>
+</head>
+<body>
+  
+  <div ng-controller="kontroly">
+  
+    <!--<kontroly-search solr-url="http://ruian.linked.opendata.cz:8080/solr/collection1/query" query=""></kontroly-search>-->
+  
+    <div kontroly-search class="row"></div>
+  
+    <div kontroly-result class="row"></div>
+  
+  </div>
+
+  <!-- In production use:
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+  -->
+  <script src="../bower_components/angular/angular.js"></script>
+  <script src="../bower_components/angular-route/angular-route.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/services.js"></script>
+  <script src="js/controllers.js"></script>
+  <script src="js/filters.js"></script>
+  <script src="js/directives.js"></script>
+  <script src="js/ui-bootstrap-tpls-0.10.0.min.js"></script>
+</body>
+</html>
