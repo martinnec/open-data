@@ -1,0 +1,28 @@
+<div>
+  
+  <div inspections-search class="row"></div>
+  
+  <div inspections-search-result class="row"></div>
+
+</div>
+
+<div>
+
+  <h1>
+    {{checkActions.docs[0].businessEntityName}} (IČ: {{checkActions.docs[0].businessEntityID}})
+  </h1>
+  
+  <h2>Výsledky kontrol</h2>
+  <table border="2">
+    <tr ng-repeat="doc in checkActions.docs">
+      <td>Sankce {{doc.sanctionValue}} (dne {{doc.sanctionDate}})</td>
+      <td>{{doc.street}}, {{doc.locality}}, {{doc.region}}</td>
+      <td><a href="{{doc.agentResource}}">{{doc.agentResource}}</a></td>
+      <td><google-map center="doc.center" zoom="doc.zoom">
+        <marker coords="doc.center"></marker>
+      </google-map></td>
+    </tr>
+  </table>
+  
+  
+</div>

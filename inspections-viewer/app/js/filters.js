@@ -2,9 +2,4 @@
 
 /* Filters */
 
-angular.module('kontrolyApp.filters', []).
-  filter('split', function() {
-    return function(input, splitChar) {
-      return input.split(splitChar);
-    }
-  });
+angular.module('InspectionsViewerApp.filters', []);

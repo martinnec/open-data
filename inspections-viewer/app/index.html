@@ -1,23 +1,15 @@
 <!doctype html>
-<html lang="cs" ng-app="kontrolyApp">
+<html lang="cs" ng-app="InspectionsViewerApp">
 <head>
   <meta charset="utf-8">
   <title>Výsledky kontrol</title>
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="css/bootstrap.min.css"/>
   <link rel="stylesheet" href="css/app.css"/>
 </head>
 <body>
   
-  <div ng-controller="kontroly">
+  <div ng-view></div>
   
-    <!--<kontroly-search solr-url="http://ruian.linked.opendata.cz:8080/solr/collection1/query" query=""></kontroly-search>-->
-  
-    <div kontroly-search class="row"></div>
-  
-    <div kontroly-result class="row"></div>
-  
-  </div>
-
   <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
   -->
@@ -28,6 +20,11 @@
   <script src="js/controllers.js"></script>
   <script src="js/filters.js"></script>
   <script src="js/directives.js"></script>
+  <script src="js/underscore.js"></script>
+  <script src='js/google-maps.js'></script>
+  <script src="js/angular-google-maps.js"></script>
+  <!--
   <script src="js/ui-bootstrap-tpls-0.10.0.min.js"></script>
+  -->
 </body>
 </html>
