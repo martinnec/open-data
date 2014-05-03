@@ -1,5 +1,8 @@
 /* app css stylesheet */
 
+/* for ui.bootstrap */
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+
 .menu {
   list-style: none;
   border-bottom: 0.1em solid black;
@@ -30,3 +33,18 @@
 }
 
 .angular-google-map-container { height: 400px; width: 400px; }
+
+.search-container {
+	padding-top: 7em;
+}
+
+/* Custom page footer */
+.footer {
+  padding-top: 1em;
+  color: #777;
+  border-top: 1px solid #e5e5e5;
+}
+
+.result .list-group {
+  max-width: 30em;
+}

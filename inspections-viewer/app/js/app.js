@@ -6,7 +6,8 @@ angular.module('InspectionsViewerApp', [
   'InspectionsViewerApp.filters',
   'InspectionsViewerApp.services',
   'InspectionsViewerApp.directives',
-  'InspectionsViewerApp.controllers'
+  'InspectionsViewerApp.controllers',
+  'ui.bootstrap'
 ])
 .config(['$routeProvider',
   function($routeProvider)  {
