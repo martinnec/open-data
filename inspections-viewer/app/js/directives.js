@@ -48,7 +48,8 @@ angular.module('InspectionsViewerApp.directives', [])
                 '  </div>' +
                 '  <button type="submit" class="btn btn-default">Submit</button>' +
                 '</form>'
-    }  })
+    }  
+})
   .directive('inspectionsSearch', function() {
     return {
       controller: function($scope, $http) {
@@ -90,3 +91,103 @@ angular.module('InspectionsViewerApp.directives', [])
                 '</form>'
     }
   })
+.directive('inspectionResultsTable', function() {
+	return {
+		controller: function($scope, $timeout, $resource, $http, ngTableParams) {
+    
+    $scope.tableParams = new ngTableParams({
+        page: 1,            // show first page
+        count: 10,          // count per page
+        sorting: {
+            checkActionID: 'asc'     // initial sorting
+        }
+    }, {
+        total: 0,           // length of data
+        getData: function($defer, params) {
+		
+		var sortparam = '';
+		for (var column in params.sorting()) {
+                if (sortparam != '') sortparam += ',';
+				sortparam += column + ' ' + (params.sorting()[column]);
+            }
+		
+		var filterparam = [];
+		for (var column in params.filter()) {
+				filterparam.push(column + ':*' + (params.filter()[column]) + '*');
+            }
+			
+		$http(
+          {method: 'JSONP',
+           url: 'http://ruian.linked.opendata.cz:8080/solr/collection1/query',
+           params:{'json.wrf': 'JSON_CALLBACK',
+                  'q': '*:*',
+                  'start': (params.page() - 1) * params.count(),
+				  'rows': params.count(),
+				  'sort': sortparam,
+				  'fq': filterparam
+				  }
+          }
+        ).success(function(data) {
+            var docs = data.response.docs;
+            console.log('search success!');
+            params.total(data.response.numFound);
+			$defer.resolve(data.response.docs);
+          }
+        ).error(function() {
+            console.log('Search failed!');
+          }
+        );
+        }
+    });
+	},
+	template: '<div loading-container="tableParams.settings().$loading">'+
+      '<table ng-table="tableParams" show-filter="true" class="table">'+
+        '<tbody>'+
+          '<tr ng-repeat="check in $data">'+
+            '<td data-title="\'Kontrola\'" filter="{ \'checkActionID\': \'text\' }" sortable="checkActionID">'+
+                    '{{check.checkActionID}}'+
+                '</td>'+
+            '<td data-title="\'IČ\'" filter="{ \'businessEntityID\': \'text\' }" sortable="businessEntityID">'+
+                    '{{check.businessEntityID}}'+
+                '</td>'+
+            '<td data-title="\'Jméno subjektu\'" filter="{ \'businessEntityName\': \'text\' }" sortable="businessEntityName">'+
+                    '{{check.businessEntityName}}'+
+                '</td>'+
+            '<td data-title="\'Sankce\'" sortable="sanctionValue">'+
+                    '{{check.sanctionValue}} CZK'+
+                '</td>'+
+            '<td data-title="\'Kontrolní orgán\'" >'+
+                    '<a href="{{check.agentResource}}">{{check.agentResource}}</a>'+
+                '</td>'+
+            '<td data-title="\'Ulice\'" sortable="street" filter="{ \'street\': \'text\' }">'+
+                    '{{check.street}}'+
+                '</td>'+
+            '<td data-title="\'Město\'" sortable="locality" filter="{ \'locality\': \'text\' }">'+
+                    '{{check.locality}}'+
+                '</td>'+
+            '<td data-title="\'Kraj\'" sortable="region" filter="{ \'region\': \'text\' }">'+
+                    '{{check.region}}'+
+                '</td>'+
+            '<td data-title="\'PSČ\'" sortable="postalCode" filter="{ \'postalCode\': \'text\' }">'+
+                    '{{check.postalCode}}'+
+                '</td>'+
+          '</tr>'+
+        '</tbody>'+
+      '</table>'+
+    '</div>'
+	}
+})
+.directive('loadingContainer', function () {
+    return {
+        restrict: 'A',
+        scope: false,
+        link: function(scope, element, attrs) {
+            var loadingLayer = angular.element('<div class="loading"></div>');
+            element.append(loadingLayer);
+            element.addClass('loading-container');
+            scope.$watch(attrs.loadingContainer, function(value) {
+                loadingLayer.toggleClass('ng-hide', !value);
+            });
+        }
+    };
+});
