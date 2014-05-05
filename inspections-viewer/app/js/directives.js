@@ -128,7 +128,7 @@ angular.module('InspectionsViewerApp.directives', [])
 				  }
           }
         ).success(function(data) {
-            var docs = data.response.docs;
+			var docs = data.response.docs;
             console.log('search success!');
             params.total(data.response.numFound);
 			$defer.resolve(data.response.docs);
@@ -141,14 +141,15 @@ angular.module('InspectionsViewerApp.directives', [])
     });
 	},
 	template: '<div loading-container="tableParams.settings().$loading">'+
+	  'Celkem: {{tableParams.total()}} kontrol' +
       '<table ng-table="tableParams" show-filter="true" class="table">'+
         '<tbody>'+
           '<tr ng-repeat="check in $data">'+
             '<td data-title="\'Kontrola\'" filter="{ \'checkActionID\': \'text\' }" sortable="checkActionID">'+
-                    '{{check.checkActionID}}'+
+                    '<a href="http://linked.opendata.cz/resource/domain/coi.cz/check-action/{{check.checkActionID}}">{{check.checkActionID}}</a>'+
                 '</td>'+
             '<td data-title="\'IČ\'" filter="{ \'businessEntityID\': \'text\' }" sortable="businessEntityID">'+
-                    '{{check.businessEntityID}}'+
+                    '<a href="http://linked.opendata.cz/resource/business-entity/CZ{{check.businessEntityID}}">{{check.businessEntityID}}</a>'+
                 '</td>'+
             '<td data-title="\'Jméno subjektu\'" filter="{ \'businessEntityName\': \'text\' }" sortable="businessEntityName">'+
                     '{{check.businessEntityName}}'+

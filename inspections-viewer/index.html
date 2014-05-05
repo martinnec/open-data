@@ -26,28 +26,28 @@
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 		  </button>
-		  <a class="navbar-brand" href="#">Výsledky kontrol</a>
+		  <a class="navbar-brand">Výsledky kontrol</a>
 		</div>
-		<!--<div class="collapse navbar-collapse">
+		<div class="collapse navbar-collapse">
 		  <ul class="nav navbar-nav">
-			<li class="active"><a href="#">Home</a></li>
-			<li><a href="#about">About</a></li>
-			<li><a href="#contact">Contact</a></li>
+			<li class="active"><a href="#">Kontroly</a></li>
+			<li><a href="http://opendata.cz">Otevřená data</a></li>
+			<li><a href="http://linked.opendata.cz">Linked Data</a></li>
+			<li><a href="http://opendata.cz/contacts">Kontakty</a></li>
 		  </ul>
-		</div>-->
+		</div>
 	  </div>
   </div>
 	
   <div class="container">
 	  <div class="search-container">
 		<h1>Výsledky kontrol</h1>
-		<p class="lead">Začněte psát název kontrolovaného subjektu nebo jeho IČ</p>
+		<p class="lead">Zde můžete prohledávat otevřená propojená data o kontrolách, po kterých následovalo udělení sankce</p>
+		<div id="loading" class="animate-hide" ng-hide="true"><img src="app/img/ajax-loader.gif" alt="Loading, please wait..."/></div>
 		<div ng-view></div>
 	  </div>
 
-      <div class="footer">
-       <address><a href="http://opendata.cz"><img id="footer-logo"  src="app/img/opendata_cz.png" alt="OpenData.cz"></a></address>
-	   <h2>Zdrojová data ve formátu <a href="http://linked.opendata.cz">Linked Data</a></h2>
+	  <h2>Zdrojová data ve formátu <a href="http://linked.opendata.cz">Linked Data</a></h2>
 	   <dl>
 		<dt><a href="http://linked.opendata.cz/resource/dataset/coi.cz/kontroly">Kontroly ČOI.CZ</a></dt>
 		<dd><a href="http://linked.opendata.cz/resource/dataset/coi.cz/kontroly">http://linked.opendata.cz/resource/dataset/coi.cz/kontroly</a></dd>
@@ -57,6 +57,9 @@
 		<dd><a href="http://linked.opendata.cz/resource/dataset/ares/basic">http://linked.opendata.cz/resource/dataset/ares/basic</a></dd>
 		<dt>Google Geocoder</dt>
 	   </dl>
+
+      <div class="footer">
+       <address><a href="http://opendata.cz"><img id="footer-logo"  src="app/img/opendata_cz.png" alt="OpenData.cz"></a></address>
       </div>
   </div><!-- /.container -->
   <script data-require="angular.js@*" data-semver="1.2.9" src="http://code.angularjs.org/1.2.9/angular.js"></script>
