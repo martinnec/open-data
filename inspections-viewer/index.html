@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="cs" ng-app="InspectionsViewerApp" xmlns:ng="http://angularjs.org" id="ng-app">
+<head>
+  <meta charset="utf-8">
+  <title>Výsledky kontrol</title>
+  <link rel="stylesheet" href="app/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="app/css/app.css"/>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-50670434-1', 'vysledkykontrol.cz');
+  ga('send', 'pageview');
+
+</script>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+	  <div class="container">
+		<div class="navbar-header">
+		  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+			<span class="sr-only">Toggle navigation</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		  </button>
+		  <a class="navbar-brand" href="#">Výsledky kontrol</a>
+		</div>
+		<!--<div class="collapse navbar-collapse">
+		  <ul class="nav navbar-nav">
+			<li class="active"><a href="#">Home</a></li>
+			<li><a href="#about">About</a></li>
+			<li><a href="#contact">Contact</a></li>
+		  </ul>
+		</div>-->
+	  </div>
+  </div>
+	
+  <div class="container">
+	  <div class="search-container">
+		<h1>Výsledky kontrol</h1>
+		<p class="lead">Začněte psát název kontrolovaného subjektu nebo jeho IČ</p>
+		<div ng-view></div>
+	  </div>
+
+      <div class="footer">
+       <address><a href="http://opendata.cz"><img id="footer-logo"  src="app/img/opendata_cz.png" alt="OpenData.cz"></a></address>
+	   <h2>Zdrojová data ve formátu <a href="http://linked.opendata.cz">Linked Data</a></h2>
+	   <dl>
+		<dt><a href="http://linked.opendata.cz/resource/dataset/coi.cz/kontroly">Kontroly ČOI.CZ</a></dt>
+		<dd><a href="http://linked.opendata.cz/resource/dataset/coi.cz/kontroly">http://linked.opendata.cz/resource/dataset/coi.cz/kontroly</a></dd>
+		<dt><a href="http://linked.opendata.cz/resource/dataset/coi.cz/sankce">Sankce ČOI.CZ</a></dt>
+		<dd><a href="http://linked.opendata.cz/resource/dataset/coi.cz/sankce">http://linked.opendata.cz/resource/dataset/coi.cz/sankce</a></dd>
+		<dt><a href="http://linked.opendata.cz/resource/dataset/ares/basic">ARES - základní informace</a></dt>
+		<dd><a href="http://linked.opendata.cz/resource/dataset/ares/basic">http://linked.opendata.cz/resource/dataset/ares/basic</a></dd>
+		<dt>Google Geocoder</dt>
+	   </dl>
+      </div>
+  </div><!-- /.container -->
+  <script data-require="angular.js@*" data-semver="1.2.9" src="http://code.angularjs.org/1.2.9/angular.js"></script>
+  <script data-require="angular-resource@*" data-semver="1.2.9" src="http://code.angularjs.org/1.2.9/angular-resource.js"></script>
+<!--  <script src="../bower_components/angular/angular.js"></script>-->
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="app/js/app.js"></script>
+  <script src="app/js/services.js"></script>
+  <script src="app/js/controllers.js"></script>
+  <script src="app/js/filters.js"></script>
+  <script src="app/js/directives.js"></script>
+  <script src="app/js/underscore.js"></script>
+  <script src='app/js/google-maps.js'></script>
+  <script src="app/js/angular-google-maps.js"></script>
+  <script src="app/js/ui-bootstrap-tpls-0.11.0.min.js"></script>
+  <script data-require="ng-table@*" data-semver="0.3.0" src="http://bazalt-cms.com/assets/ng-table/0.3.0/ng-table.js"></script>
+  <link data-require="ng-table@*" data-semver="0.3.0" rel="stylesheet" href="http://bazalt-cms.com/assets/ng-table/0.3.0/ng-table.css" />
+  
+</body>
+</html>

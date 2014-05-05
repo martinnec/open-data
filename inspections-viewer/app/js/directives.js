@@ -156,6 +156,9 @@ angular.module('InspectionsViewerApp.directives', [])
             '<td data-title="\'Sankce\'" sortable="sanctionValue">'+
                     '{{check.sanctionValue}} CZK'+
                 '</td>'+
+            '<td data-title="\'Datum\'" sortable="sanctionDate">'+
+                    '{{check.sanctionDate}}'+
+                '</td>'+
             '<td data-title="\'Kontrolní orgán\'" >'+
                     '<a href="{{check.agentResource}}">{{check.agentResource}}</a>'+
                 '</td>'+

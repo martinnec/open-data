@@ -9,19 +9,21 @@ angular.module('InspectionsViewerApp', [
   'InspectionsViewerApp.controllers',
   'ui.bootstrap'
 ])
-.config(['$routeProvider',
-  function($routeProvider)  {
+.config(['$routeProvider', '$locationProvider',
+  function($routeProvider,$locationProvider)  {
     $routeProvider.
-      when('/home', {
-        templateUrl: 'partials/home.html',
+      when('/', {
+        templateUrl: 'app/partials/home.html',
         controller: 'HomeController'      
       }).
       when('/business-entities/:businessEntityID', {
-        templateUrl: 'partials/business-entity-detail.html',
+        templateUrl: 'app/partials/business-entity-detail.html',
         controller: 'BusinessEntityDetailController'
       }).
       otherwise({
-        redirectTo: '/home'
+        redirectTo: '/'
       });
+	  
+	  $locationProvider.html5Mode(true);
   }
 ]);

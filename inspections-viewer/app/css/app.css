@@ -35,7 +35,7 @@
 .angular-google-map-container { height: 400px; width: 400px; }
 
 .search-container {
-	padding-top: 7em;
+	padding-top: 5em;
 }
 
 /* Custom page footer */
@@ -73,3 +73,7 @@ body {
     opacity: 0.5;
 }
 /* end of ngtable */
+
+#footer-logo {
+	width: 20em;
+}
