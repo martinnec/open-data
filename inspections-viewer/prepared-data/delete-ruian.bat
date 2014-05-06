@@ -1,0 +1,1 @@
+curl "http://ruian.linked.opendata.cz:8080/solr/collection1/update?stream.body=<delete><query>*:*</query></delete>&commit=true"

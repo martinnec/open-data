@@ -1,0 +1,1 @@
+curl "http://localhost:8080/solr-coi/collection1/update?stream.body=<delete><query>*:*</query></delete>&commit=true"

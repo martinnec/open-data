@@ -1,0 +1,1 @@
+java -Dtype=text/csv -Durl=http://localhost:8080/solr-coi/update/csv -jar post.jar kontroly.csv

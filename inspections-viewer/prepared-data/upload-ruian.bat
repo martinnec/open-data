@@ -1,0 +1,1 @@
+java -Dtype=text/csv -Durl=http://ruian.linked.opendata.cz:8080/solr/update/csv -jar post.jar kontroly.csv
