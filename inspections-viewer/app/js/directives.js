@@ -117,7 +117,7 @@ angular.module('InspectionsViewerApp.directives', [])
 		
 		var filterparam = [];
 		for (var column in params.filter()) {
-				if (filterparam != '') filterparam.push(column + ':"*' + (params.filter()[column]) + '*"');
+				if (params.filter()[column] != '') filterparam.push(column + ':*' + (params.filter()[column]) + '*');
             }
 			
 		$http(
@@ -201,6 +201,7 @@ angular.module('InspectionsViewerApp.directives', [])
 				'<google-map center="check.center" zoom="check.zoom">' +
 					'<marker coords="check.position"></marker>' +
 				'</google-map>' +
+				'<a target="_blank" href="http://maps.google.com/?ie=UTF8&q={{check.lat}},{{check.lng}}&ll={{check.lat}},{{check.lng}}&z={{check.zoom}}">Větší mapa</a>' +
 			'</td>'+
           '</tr>'+
         '</tbody>'+
