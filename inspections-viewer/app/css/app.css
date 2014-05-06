@@ -32,8 +32,9 @@
   padding: 0;
 }
 
-.angular-google-map-container { height: 400px; width: 400px; }
+.smallmap .angular-google-map-container { height: 15em; width: 15em; }
 
+.bigmap .angular-google-map-container  { height: 20em; width: auto; }
 .search-container {
 	padding-top: 5em;
 }
