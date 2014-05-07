@@ -133,7 +133,10 @@ angular.module('InspectionsViewerApp.directives', [])
             params.total(data.response.numFound);
 			
 			for (var i = 0; i < docs.length; i++)  {
-              docs[i].zoom = 14;
+              if (docs[i].lat) {
+				  docs[i].zoom = 14;
+				  docs[i].maphtml = '<a target="_blank" href="http://maps.google.com/?ie=UTF8&q=' + docs[i].lat +','+docs[i].lng+'&ll='+docs[i].lat+','+docs[i].lng+'&z='+docs[i].zoom+'">Mapa</a>';
+			  }
             }
 			$defer.resolve(docs);
           }
@@ -150,22 +153,22 @@ angular.module('InspectionsViewerApp.directives', [])
         '<tbody>'+
           '<tr ng-repeat="check in $data">'+
             '<td data-title="\'Kontrola\'" filter="{ \'checkActionID\': \'text\' }" sortable="checkActionID">'+
-                    '<a href="http://linked.opendata.cz/resource/domain/coi.cz/check-action/{{check.checkActionID}}">{{check.checkActionID}}</a>'+
+                    '<a target="_blank" href="http://linked.opendata.cz/resource/domain/coi.cz/check-action/{{check.checkActionID}}">{{check.checkActionID}}</a>'+
 			'</td>'+
             '<td data-title="\'IČ\'" filter="{ \'businessEntityID\': \'text\' }" sortable="businessEntityID">'+
-                    '<a href="http://linked.opendata.cz/resource/business-entity/CZ"{{check.businessEntityID}}">{{check.businessEntityID}}</a>'+
+                    '<a target="_blank" href="http://linked.opendata.cz/resource/business-entity/CZ"{{check.businessEntityID}}">{{check.businessEntityID}}</a>'+
 			'</td>'+
             '<td data-title="\'Jméno subjektu\'" filter="{ \'businessEntityName\': \'text\' }" sortable="businessEntityName">'+
                     '{{check.businessEntityName}}'+
 			'</td>'+
+            '<td data-title="\'Datum kontroly\'" sortable="checkDate" filter="{ \'checkDate\': \'text\' }">'+
+                    '{{check.checkDate.substring(0,10)}}'+
+			'</td>'+
             '<td data-title="\'Sankce\'" sortable="sanctionValue">'+
                     '{{check.sanctionValue}}{{check.sanctionValue ? " CZK" : ""}}'+
 			'</td>'+
-            '<td data-title="\'Datum\'" sortable="sanctionDate" filter="{ \'sanctionDate\': \'text\' }">'+
-                    '{{check.sanctionDate}}'+
-			'</td>'+
             '<td data-title="\'Kontrolní orgán\'" >'+
-                    '<a href="{{check.agentResource}}">{{check.agentResource}}</a>'+
+                    '<a target="_blank" href="{{check.agentResource}}">{{check.agentResource}}</a>'+
 			'</td>'+
             '<td data-title="\'Ulice\'" sortable="street" filter="{ \'street\': \'text\' }">'+
                     '{{check.street}}'+
@@ -180,7 +183,7 @@ angular.module('InspectionsViewerApp.directives', [])
                     '{{check.postalCode}}'+
 			'</td>'+
             '<td class="smallmap" data-title="\'Mapa\'">'+
-				'<a target="_blank" href="http://maps.google.com/?ie=UTF8&q={{check.lat}},{{check.lng}}&ll={{check.lat}},{{check.lng}}&z={{check.zoom}}">Mapa</a>' +
+				'<span ng-bind-html="check.maphtml"></span>'+
 			'</td>'+
           '</tr>'+
         '</tbody>'+
@@ -244,6 +247,7 @@ angular.module('InspectionsViewerApp.directives', [])
                 longitude: docs[i].lng
               };
               docs[i].zoom = 14;
+			  docs[i].maphtml = '<a target="_blank" href="http://maps.google.com/?ie=UTF8&q=' + docs[i].lat +','+docs[i].lng+'&ll='+docs[i].lat+','+docs[i].lng+'&z='+docs[i].zoom+'">Větší mapa</a>';
 			  docs[i].options = {
 				title: docs[i].businessEntityName
 			  };
@@ -267,22 +271,22 @@ angular.module('InspectionsViewerApp.directives', [])
         '<tbody>'+
           '<tr ng-repeat="check in $data">'+
             '<td data-title="\'Kontrola\'" filter="{ \'checkActionID\': \'text\' }" sortable="checkActionID">'+
-                    '<a href="http://linked.opendata.cz/resource/domain/coi.cz/check-action/{{check.checkActionID}}">{{check.checkActionID}}</a>'+
+                    '<a target="_blank"  href="http://linked.opendata.cz/resource/domain/coi.cz/check-action/{{check.checkActionID}}">{{check.checkActionID}}</a>'+
 			'</td>'+
             '<td data-title="\'IČ\'" filter="{ \'businessEntityID\': \'text\' }" sortable="businessEntityID">'+
-                    '<a href="http://linked.opendata.cz/resource/business-entity/CZ"{{check.businessEntityID}}">{{check.businessEntityID}}</a>'+
+                    '<a target="_blank"  href="http://linked.opendata.cz/resource/business-entity/CZ"{{check.businessEntityID}}">{{check.businessEntityID}}</a>'+
 			'</td>'+
             '<td data-title="\'Jméno subjektu\'" filter="{ \'businessEntityName\': \'text\' }" sortable="businessEntityName">'+
                     '{{check.businessEntityName}}'+
 			'</td>'+
+            '<td data-title="\'Datum kontroly\'" sortable="checkDate" filter="{ \'checkDate\': \'text\' }">'+
+                    '{{check.checkDate.substring(0,10)}}'+
+			'</td>'+
             '<td data-title="\'Sankce\'" sortable="sanctionValue">'+
                     '{{check.sanctionValue}}{{check.sanctionValue ? " CZK" : ""}}'+
 			'</td>'+
-            '<td data-title="\'Datum\'" sortable="sanctionDate" filter="{ \'sanctionDate\': \'text\' }">'+
-                    '{{check.sanctionDate}}'+
-			'</td>'+
             '<td data-title="\'Kontrolní orgán\'" >'+
-                    '<a href="{{check.agentResource}}">{{check.agentResource}}</a>'+
+                    '<a target="_blank"  href="{{check.agentResource}}">{{check.agentResource}}</a>'+
 			'</td>'+
             '<td data-title="\'Ulice\'" sortable="street" filter="{ \'street\': \'text\' }">'+
                     '{{check.street}}'+
@@ -300,7 +304,7 @@ angular.module('InspectionsViewerApp.directives', [])
 				'<google-map center="check.center" zoom="check.zoom">' +
 					'<marker coords="check.position"></marker>' +
 				'</google-map>' +
-				'<a target="_blank" href="http://maps.google.com/?ie=UTF8&q={{check.lat}},{{check.lng}}&ll={{check.lat}},{{check.lng}}&z={{check.zoom}}">Větší mapa</a>' +
+				'<span ng-bind-html="check.maphtml"></span>'+
 			'</td>'+
           '</tr>'+
         '</tbody>'+
