@@ -3,7 +3,7 @@
 /* Directives */
 
 angular.module('InspectionsViewerApp.directives', [])
-  .directive('inspectionsSearchResult', function() {
+/*  .directive('inspectionsSearchResult', function() {
     return {
       template: '<div><ul class="list-group">' +
                 '  <li ng-repeat="doc in results.docs" class="list-group-item">' +
@@ -11,8 +11,8 @@ angular.module('InspectionsViewerApp.directives', [])
                 '  </li>' +
                 '</ul></div>'
     }
-  })
-  .directive('inspectionsSearchTypeahead', function() {
+  })*/
+/*  .directive('inspectionsSearchTypeahead', function() {
     return {
       controller: function($scope, $http) {
         console.log('Typeahead controller start');
@@ -49,8 +49,8 @@ angular.module('InspectionsViewerApp.directives', [])
                 '  <button type="submit" class="btn btn-default">Submit</button>' +
                 '</form>'
     }  
-})
-  .directive('inspectionsSearch', function() {
+})*/
+/*  .directive('inspectionsSearch', function() {
     return {
       controller: function($scope, $http) {
         console.log('Searching for ' + $scope.query);
@@ -90,18 +90,14 @@ angular.module('InspectionsViewerApp.directives', [])
                 '  <button type="submit" class="btn btn-default">Submit</button>' +
                 '</form>'
     }
-  })
+  })*/
 .directive('inspectionResultsTable', function() {
 	return {
 		controller: function($scope, $timeout, $resource, $http, ngTableParams) {
-	$scope.defaultZoom = 7;
-	$scope.defaultCenter = {
-		latitude: 49.8037633,
-		longitude: 15.4749126
-	};    
     $scope.tableParams = new ngTableParams({
         page: 1,            // show first page
         count: 10,          // count per page
+		filterDelay: 1500,
         sorting: {
             checkActionID: 'asc'     // initial sorting
         }
@@ -135,6 +131,109 @@ angular.module('InspectionsViewerApp.directives', [])
 			var docs = data.response.docs;
             console.log('search success!');
             params.total(data.response.numFound);
+			
+			for (var i = 0; i < docs.length; i++)  {
+              docs[i].zoom = 14;
+            }
+			$defer.resolve(docs);
+          }
+        ).error(function() {
+            console.log('Search failed!');
+          }
+        );
+        }
+    });
+	},
+	template: '<div loading-container="tableParams.settings().$loading">'+
+	  'Celkem: {{tableParams.total()}} kontrol' +
+      '<table ng-table="tableParams" show-filter="true" class="table">'+
+        '<tbody>'+
+          '<tr ng-repeat="check in $data">'+
+            '<td data-title="\'Kontrola\'" filter="{ \'checkActionID\': \'text\' }" sortable="checkActionID">'+
+                    '<a href="http://linked.opendata.cz/resource/domain/coi.cz/check-action/{{check.checkActionID}}">{{check.checkActionID}}</a>'+
+			'</td>'+
+            '<td data-title="\'IČ\'" filter="{ \'businessEntityID\': \'text\' }" sortable="businessEntityID">'+
+                    '<a href="http://linked.opendata.cz/resource/business-entity/CZ"{{check.businessEntityID}}">{{check.businessEntityID}}</a>'+
+			'</td>'+
+            '<td data-title="\'Jméno subjektu\'" filter="{ \'businessEntityName\': \'text\' }" sortable="businessEntityName">'+
+                    '{{check.businessEntityName}}'+
+			'</td>'+
+            '<td data-title="\'Sankce\'" sortable="sanctionValue">'+
+                    '{{check.sanctionValue}}{{check.sanctionValue ? " CZK" : ""}}'+
+			'</td>'+
+            '<td data-title="\'Datum\'" sortable="sanctionDate" filter="{ \'sanctionDate\': \'text\' }">'+
+                    '{{check.sanctionDate}}'+
+			'</td>'+
+            '<td data-title="\'Kontrolní orgán\'" >'+
+                    '<a href="{{check.agentResource}}">{{check.agentResource}}</a>'+
+			'</td>'+
+            '<td data-title="\'Ulice\'" sortable="street" filter="{ \'street\': \'text\' }">'+
+                    '{{check.street}}'+
+			'</td>'+
+            '<td data-title="\'Město\'" sortable="locality" filter="{ \'locality\': \'text\' }">'+
+                    '{{check.locality}}'+
+			'</td>'+
+            '<td data-title="\'Kraj\'" sortable="region" filter="{ \'region\': \'text\' }">'+
+                    '{{check.region}}'+
+			'</td>'+
+            '<td data-title="\'PSČ\'" sortable="postalCode" filter="{ \'postalCode\': \'text\' }">'+
+                    '{{check.postalCode}}'+
+			'</td>'+
+            '<td class="smallmap" data-title="\'Mapa\'">'+
+				'<a target="_blank" href="http://maps.google.com/?ie=UTF8&q={{check.lat}},{{check.lng}}&ll={{check.lat}},{{check.lng}}&z={{check.zoom}}">Mapa</a>' +
+			'</td>'+
+          '</tr>'+
+        '</tbody>'+
+      '</table>'+
+    '</div>'
+	}
+})
+.directive('inspectionResultsMaps', function() {
+	return {
+		controller: function($scope, $timeout, $resource, $http, ngTableParams) {
+	$scope.defaultZoom = 7;
+	$scope.defaultCenter = {
+		latitude: 49.8037633,
+		longitude: 15.4749126
+	};    
+    $scope.tableParams = new ngTableParams({
+        page: 1,            // show first page
+        count: 10,          // count per page
+		filterDelay: 1500,
+        sorting: {
+            checkActionID: 'asc'     // initial sorting
+        }
+    }, {
+        total: 0,           // length of data
+        getData: function($defer, params) {
+		
+		var sortparam = '';
+		for (var column in params.sorting()) {
+                if (sortparam != '') sortparam += ',';
+				sortparam += column + ' ' + (params.sorting()[column]);
+            }
+		
+		var filterparam = [];
+		for (var column in params.filter()) {
+				if (params.filter()[column] != '') filterparam.push(column + ':*' + (params.filter()[column]) + '*');
+            }
+			
+		$http(
+          {method: 'JSONP',
+           url: 'http://ruian.linked.opendata.cz:8080/solr/collection1/query',
+           params:{'json.wrf': 'JSON_CALLBACK',
+                  'q': '*:*',
+                  'start': (params.page() - 1) * params.count(),
+				  'rows': params.count(),
+				  'sort': sortparam,
+				  'fq': filterparam
+				  }
+          }
+        ).success(function(data) {
+			var docs = data.response.docs;
+            console.log('search success!');
+            params.total(data.response.numFound);
+			
 			for (var i = 0; i < docs.length; i++)  {
               docs[i].center = {
                 latitude: docs[i].lat,
@@ -160,10 +259,10 @@ angular.module('InspectionsViewerApp.directives', [])
     });
 	},
 	template: '<div loading-container="tableParams.settings().$loading">'+
-	  'Celkem: {{tableParams.total()}} kontrol' +
 		'<google-map class="bigmap" center="defaultCenter" zoom="defaultZoom">' +
 			'<marker ng-repeat="marker in data" coords="marker.position" options="marker.options"></marker>' +
 		'</google-map>' +
+	  'Celkem: {{tableParams.total()}} kontrol' +
       '<table ng-table="tableParams" show-filter="true" class="table">'+
         '<tbody>'+
           '<tr ng-repeat="check in $data">'+

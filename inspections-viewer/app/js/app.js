@@ -13,13 +13,17 @@ angular.module('InspectionsViewerApp', [
   function($routeProvider,$locationProvider)  {
     $routeProvider.
       when('/', {
-        templateUrl: 'app/partials/home.html',
-        controller: 'HomeController'      
+        templateUrl: 'app/partials/table.html',
+        controller: 'TableController'      
       }).
-      when('/business-entities/:businessEntityID', {
-        templateUrl: 'app/partials/business-entity-detail.html',
-        controller: 'BusinessEntityDetailController'
+      when('/mapa', {
+        templateUrl: 'app/partials/maps.html',
+        controller: 'MapController'      
       }).
+      //when('/business-entities/:businessEntityID', {
+      //  templateUrl: 'app/partials/business-entity-detail.html',
+      //  controller: 'BusinessEntityDetailController'
+      //}).
       otherwise({
         redirectTo: '/'
       });

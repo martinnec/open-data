@@ -4,7 +4,22 @@
 
 
 angular.module('InspectionsViewerApp.controllers', [])
-  .controller('HomeController', [
+  .controller('TableController', [
+    '$scope',
+    function($scope) {
+      
+      //search query entered by the user    
+      $scope.query = '';
+      
+      //results of the search query executed on the SOLR instance
+      $scope.results = [];
+	  
+	  document.getElementById("nav-tabulka").setAttribute("class","active");
+	  document.getElementById("nav-mapa").removeAttribute("class");
+      
+    }
+  ])
+  .controller('MapController', [
     '$scope',
     function($scope) {
       
@@ -14,9 +29,11 @@ angular.module('InspectionsViewerApp.controllers', [])
       //results of the search query executed on the SOLR instance
       $scope.results = [];
       
+	  document.getElementById("nav-tabulka").removeAttribute("class");
+	  document.getElementById("nav-mapa").setAttribute("class","active");
     }
   ])
-  .controller('BusinessEntityDetailController', [
+  /*.controller('BusinessEntityDetailController', [
     '$scope', '$routeParams', '$http',
     function($scope, $routeParams, $http)  {
       
@@ -58,4 +75,5 @@ angular.module('InspectionsViewerApp.controllers', [])
           }
         );
     }
-  ]);
+  ])*/
+  ;
