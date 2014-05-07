@@ -20,6 +20,10 @@ angular.module('InspectionsViewerApp', [
         templateUrl: 'app/partials/maps.html',
         controller: 'MapController'      
       }).
+      when('/zdroje', {
+        templateUrl: 'app/partials/sources.html',
+        controller: 'SourcesController'      
+      }).
       //when('/business-entities/:businessEntityID', {
       //  templateUrl: 'app/partials/business-entity-detail.html',
       //  controller: 'BusinessEntityDetailController'

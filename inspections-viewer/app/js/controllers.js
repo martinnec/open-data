@@ -16,6 +16,23 @@ angular.module('InspectionsViewerApp.controllers', [])
 	  
 	  document.getElementById("nav-tabulka").setAttribute("class","active");
 	  document.getElementById("nav-mapa").removeAttribute("class");
+	  document.getElementById("nav-sources").removeAttribute("class");
+      
+    }
+  ])
+  .controller('SourcesController', [
+    '$scope',
+    function($scope) {
+      
+      //search query entered by the user    
+      $scope.query = '';
+      
+      //results of the search query executed on the SOLR instance
+      $scope.results = [];
+	  
+	  document.getElementById("nav-tabulka").removeAttribute("class");
+	  document.getElementById("nav-mapa").removeAttribute("class");
+	  document.getElementById("nav-sources").setAttribute("class","active");
       
     }
   ])
@@ -31,6 +48,8 @@ angular.module('InspectionsViewerApp.controllers', [])
       
 	  document.getElementById("nav-tabulka").removeAttribute("class");
 	  document.getElementById("nav-mapa").setAttribute("class","active");
+	  document.getElementById("nav-sources").removeAttribute("class");
+	  
     }
   ])
   /*.controller('BusinessEntityDetailController', [
