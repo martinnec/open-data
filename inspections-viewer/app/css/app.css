@@ -35,9 +35,6 @@
 .smallmap .angular-google-map-container { height: 15em; width: 15em; }
 
 .bigmap .angular-google-map-container  { height: 20em; width: auto; }
-.search-container {
-	padding-top: 4em;
-}
 
 /* Custom page footer */
 .footer {
@@ -51,11 +48,6 @@
 }
 
 /* ngtable */
-body {
-    padding: 10px !important;   
-}
-
-
 .loading-container {
     position: relative;
 }

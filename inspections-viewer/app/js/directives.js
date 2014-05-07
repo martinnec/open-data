@@ -159,7 +159,7 @@ angular.module('InspectionsViewerApp.directives', [])
                     '<a target="_blank" href="http://linked.opendata.cz/resource/domain/coi.cz/check-action/{{check.checkActionID}}"><span class="glyphicon glyphicon-new-window"></span> {{check.checkDate.substring(0,10)}}</a>'+
 			'</td>'+
             '<td data-title="\'IČ\'" filter="{ \'businessEntityID\': \'text\' }" sortable="businessEntityID">'+
-                    '<a target="_blank" href="http://linked.opendata.cz/resource/business-entity/CZ"{{check.businessEntityID}}"><span class="glyphicon glyphicon-new-window"></span> {{check.businessEntityID}}</a>'+
+                    '<a target="_blank" href="http://linked.opendata.cz/resource/business-entity/CZ{{check.businessEntityID}}"><span class="glyphicon glyphicon-new-window"></span> {{check.businessEntityID}}</a>'+
 			'</td>'+
             '<td data-title="\'Jméno subjektu\'" filter="{ \'businessEntityName\': \'text\' }" sortable="businessEntityName">'+
                     '{{check.businessEntityName}}'+
@@ -277,7 +277,7 @@ angular.module('InspectionsViewerApp.directives', [])
                     '<a target="_blank" href="http://linked.opendata.cz/resource/domain/coi.cz/check-action/{{check.checkActionID}}"><span class="glyphicon glyphicon-new-window"></span> {{check.checkDate.substring(0,10)}}</a>'+
 			'</td>'+
             '<td data-title="\'IČ\'" filter="{ \'businessEntityID\': \'text\' }" sortable="businessEntityID">'+
-                    '<a target="_blank" href="http://linked.opendata.cz/resource/business-entity/CZ"{{check.businessEntityID}}"><span class="glyphicon glyphicon-new-window"></span> {{check.businessEntityID}}</a>'+
+                    '<a target="_blank" href="http://linked.opendata.cz/resource/business-entity/CZ{{check.businessEntityID}}"><span class="glyphicon glyphicon-new-window"></span> {{check.businessEntityID}}</a>'+
 			'</td>'+
             '<td data-title="\'Jméno subjektu\'" filter="{ \'businessEntityName\': \'text\' }" sortable="businessEntityName">'+
                     '{{check.businessEntityName}}'+
