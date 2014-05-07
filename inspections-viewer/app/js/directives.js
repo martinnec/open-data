@@ -149,8 +149,9 @@ angular.module('InspectionsViewerApp.directives', [])
     });
 	},
 	template: '<div loading-container="tableParams.settings().$loading">'+
-	  'Celkem: {{tableParams.total()}} řádek' +
-      '<table ng-table="tableParams" show-filter="true" class="table">'+
+	  '<p>Celkem: {{tableParams.total()}} řádek</p>' +
+	  '<a class="btn btn-primary pull-right" ng-mousedown="csv.generate()" ng-href="{{csv.link()}}" download="kontroly.csv">Stáhnout výběr jako CSV</a>' +
+      '<table ng-table="tableParams" show-filter="true" class="table" export-csv="csv">'+
         '<tbody>'+
           '<tr ng-repeat="check in $data">'+
             //'<td data-title="\'Kontrola\'" filter="{ \'checkActionID\': \'text\' }" sortable="checkActionID">'+
