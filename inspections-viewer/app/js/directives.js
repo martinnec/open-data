@@ -113,7 +113,7 @@ angular.module('InspectionsViewerApp.directives', [])
 		
 		var filterparam = [];
 		for (var column in params.filter()) {
-				if (params.filter()[column] != '') filterparam.push(column + ':"*' + (params.filter()[column]) + '*"');
+				if (params.filter()[column] != '') filterparam.push(column + ':*' + (params.filter()[column]) + '*');
             }
 			
 		$http(
@@ -218,7 +218,7 @@ angular.module('InspectionsViewerApp.directives', [])
 		
 		var filterparam = [];
 		for (var column in params.filter()) {
-				if (params.filter()[column] != '') filterparam.push(column + ':"*' + (params.filter()[column]) + '*"');
+				if (params.filter()[column] != '') filterparam.push(column + ':*' + (params.filter()[column]) + '*');
             }
 			
 		$http(
