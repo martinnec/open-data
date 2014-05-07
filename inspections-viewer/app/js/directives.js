@@ -99,7 +99,7 @@ angular.module('InspectionsViewerApp.directives', [])
         count: 10,          // count per page
 		filterDelay: 1500,
         sorting: {
-            checkActionID: 'asc'     // initial sorting
+            checkDate: 'desc'     // initial sorting
         }
     }, {
         total: 0,           // length of data
@@ -204,7 +204,7 @@ angular.module('InspectionsViewerApp.directives', [])
         count: 10,          // count per page
 		filterDelay: 1500,
         sorting: {
-            checkActionID: 'asc'     // initial sorting
+            checkDate: 'desc'     // initial sorting
         }
     }, {
         total: 0,           // length of data
