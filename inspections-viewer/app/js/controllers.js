@@ -15,7 +15,7 @@ angular.module('InspectionsViewerApp.controllers', [])
       $scope.results = [];
 	  
 	  document.getElementById("nav-tabulka").setAttribute("class","active");
-	  document.getElementById("nav-mapa").removeAttribute("class");
+	  //document.getElementById("nav-mapa").removeAttribute("class");
 	  document.getElementById("nav-sources").removeAttribute("class");
       
     }
@@ -31,7 +31,7 @@ angular.module('InspectionsViewerApp.controllers', [])
       $scope.results = [];
 	  
 	  document.getElementById("nav-tabulka").removeAttribute("class");
-	  document.getElementById("nav-mapa").removeAttribute("class");
+	  //document.getElementById("nav-mapa").removeAttribute("class");
 	  document.getElementById("nav-sources").setAttribute("class","active");
       
     }
@@ -47,7 +47,7 @@ angular.module('InspectionsViewerApp.controllers', [])
       $scope.results = [];
       
 	  document.getElementById("nav-tabulka").removeAttribute("class");
-	  document.getElementById("nav-mapa").setAttribute("class","active");
+	  //document.getElementById("nav-mapa").setAttribute("class","active");
 	  document.getElementById("nav-sources").removeAttribute("class");
 	  
     }

@@ -113,7 +113,7 @@ angular.module('InspectionsViewerApp.directives', [])
 		
 		var filterparam = [];
 		for (var column in params.filter()) {
-				if (params.filter()[column] != '') filterparam.push(column + ':*' + (params.filter()[column]) + '*');
+				if (params.filter()[column] != '') filterparam.push(column + ':"*' + (params.filter()[column]) + '*"');
             }
 			
 		$http(
@@ -148,7 +148,7 @@ angular.module('InspectionsViewerApp.directives', [])
     });
 	},
 	template: '<div loading-container="tableParams.settings().$loading">'+
-	  'Celkem: {{tableParams.total()}} kontrol' +
+	  'Celkem: {{tableParams.total()}} řádek' +
       '<table ng-table="tableParams" show-filter="true" class="table">'+
         '<tbody>'+
           '<tr ng-repeat="check in $data">'+
@@ -218,7 +218,7 @@ angular.module('InspectionsViewerApp.directives', [])
 		
 		var filterparam = [];
 		for (var column in params.filter()) {
-				if (params.filter()[column] != '') filterparam.push(column + ':*' + (params.filter()[column]) + '*');
+				if (params.filter()[column] != '') filterparam.push(column + ':"*' + (params.filter()[column]) + '*"');
             }
 			
 		$http(
@@ -266,7 +266,7 @@ angular.module('InspectionsViewerApp.directives', [])
 		'<google-map class="bigmap" center="defaultCenter" zoom="defaultZoom">' +
 			'<marker ng-repeat="marker in data" coords="marker.position" options="marker.options"></marker>' +
 		'</google-map>' +
-	  'Celkem: {{tableParams.total()}} kontrol' +
+	  'Celkem: {{tableParams.total()}} řádek' +
       '<table ng-table="tableParams" show-filter="true" class="table">'+
         '<tbody>'+
           '<tr ng-repeat="check in $data">'+
