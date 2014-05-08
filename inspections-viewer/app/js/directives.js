@@ -245,15 +245,15 @@ angular.module('InspectionsViewerApp.directives', [])
                 latitude: docs[i].lat,
                 longitude: docs[i].lng
               };
-              docs[i].position = {
-                latitude: docs[i].lat,
-                longitude: docs[i].lng
+              docs[i].coordinates = {
+                lat: docs[i].lat,
+                lng: docs[i].lng
               };
               docs[i].zoom = 14;
 			  docs[i].maphtml = '<a target="_blank" href="http://maps.google.com/?ie=UTF8&q=' + docs[i].lat +','+docs[i].lng+'&ll='+docs[i].lat+','+docs[i].lng+'&z='+docs[i].zoom+'"><span class="glyphicon glyphicon-new-window"></span> Větší mapa</a>';
-			  docs[i].options = {
-				title: docs[i].businessEntityName
-			  };
+			  docs[i].title = docs[i].businessEntityName;
+			  docs[i].description = docs[i].businessEntityID + " " + docs[i].businessEntityName;
+			  
             }
 			$scope.data = docs;
 			$defer.resolve(docs);
@@ -266,9 +266,10 @@ angular.module('InspectionsViewerApp.directives', [])
     });
 	},
 	template: '<div loading-container="tableParams.settings().$loading">'+
-		'<google-map class="bigmap" center="defaultCenter" zoom="defaultZoom">' +
-			'<marker ng-repeat="marker in data" coords="marker.position" options="marker.options"></marker>' +
-		'</google-map>' +
+		'<gmaps class="bigmap" markers="data"></gmaps>' +
+		//'<google-map class="bigmap" center="defaultCenter" zoom="defaultZoom">' +
+		//	'<marker ng-repeat="marker in data" coords="marker.position" options="marker.options"></marker>' +
+		//'</google-map>' +
 	  'Celkem: {{tableParams.total()}} řádek' +
       '<table ng-table="tableParams" show-filter="true" class="table">'+
         '<tbody>'+
@@ -304,9 +305,9 @@ angular.module('InspectionsViewerApp.directives', [])
                     '{{check.postalCode}}'+
 			'</td>'+
             '<td class="smallmap" data-title="\'Mapa\'">'+
-				'<google-map center="check.center" zoom="check.zoom">' +
-					'<marker coords="check.position"></marker>' +
-				'</google-map>' +
+//				'<google-map center="check.center" zoom="check.zoom">' +
+//					'<marker coords="check.position"></marker>' +
+//				'</google-map>' +
 				'<span ng-bind-html="check.maphtml"></span>'+
 			'</td>'+
           '</tr>'+
@@ -328,4 +329,76 @@ angular.module('InspectionsViewerApp.directives', [])
             });
         }
     };
-});
+})
+.directive('gmaps', [function () {
+	return {
+		scope: {
+			markerData: '=markers',
+			mapType: '@',
+			zoom: '@',
+			center: '='
+		},
+		controller: function ($scope) {
+
+			$scope._gMarkers = [];
+
+			$scope.getTitle = function (item) {
+				var t = "";
+				if (item.title) {
+					t += item.title;
+				}
+				return t;
+			};
+
+			$scope.updateMarkers = function () {
+
+				angular.forEach($scope._gMarkers, function (m) {
+					m.setMap(null);
+				});
+
+				angular.forEach($scope.markerData, function (item, k) {
+
+					var marker = new google.maps.Marker({
+						position: new google.maps.LatLng(item.coordinates.lat, item.coordinates.lng),
+						map: $scope.map,
+						title: $scope.getTitle(item)
+					});
+
+					$scope._gMarkers.push(marker);
+
+					//$scope.addVisibilityListener(item, marker);
+
+					var contentString = '<p>' + item.description.replace(/\n/g, "<br />") + '</p>';
+
+					google.maps.event.addListener(marker, 'click', function (content) {
+						return function () {
+							$scope.infowindow.setContent(content);//set the content
+							$scope.infowindow.open($scope.map, this);
+						}
+					}(contentString));
+				});
+			};
+
+			$scope.$watch('markerData', function (oldval, newval) {
+				$scope.updateMarkers();
+			});
+
+		},
+		link: function ($scope, $elm, $attrs) {
+
+			var center = $scope.center || '[0,0]';
+			var evalCenter = eval(center);
+
+			$scope.map = new google.maps.Map($elm[0], {
+				center: new google.maps.LatLng(evalCenter[0], evalCenter[1]),
+				zoom: parseInt($scope.zoom) || 0,
+				mapTypeId: $scope.mapType || google.maps.MapTypeId.ROADMAP
+			});
+
+			$scope.infowindow = new google.maps.InfoWindow();
+		},
+		restrict: 'E',
+		template: '<div class="gmaps"></div>',
+		replace: true
+	}
+}]);
