@@ -197,10 +197,7 @@ angular.module('InspectionsViewerApp.directives', [])
 	return {
 		controller: function($scope, $timeout, $resource, $http, ngTableParams) {
 	$scope.defaultZoom = 7;
-	$scope.defaultCenter = {
-		latitude: 49.8037633,
-		longitude: 15.4749126
-	};    
+	$scope.defaultCenter = "[49.8037633,15.4749126]";
     $scope.tableParams = new ngTableParams({
         page: 1,            // show first page
         count: 10,          // count per page
@@ -241,10 +238,8 @@ angular.module('InspectionsViewerApp.directives', [])
             params.total(data.response.numFound);
 			
 			for (var i = 0; i < docs.length; i++)  {
-              docs[i].center = {
-                latitude: docs[i].lat,
-                longitude: docs[i].lng
-              };
+			  
+			  docs[i].center = "[" + docs[i].lat + "," + docs[i].lng + "]";
               docs[i].coordinates = {
                 lat: docs[i].lat,
                 lng: docs[i].lng
@@ -253,8 +248,7 @@ angular.module('InspectionsViewerApp.directives', [])
 			  docs[i].maphtml = '<a target="_blank" href="http://maps.google.com/?ie=UTF8&q=' + docs[i].lat +','+docs[i].lng+'&ll='+docs[i].lat+','+docs[i].lng+'&z='+docs[i].zoom+'"><span class="glyphicon glyphicon-new-window"></span> Větší mapa</a>';
 			  docs[i].title = docs[i].businessEntityName;
 			  docs[i].description = docs[i].businessEntityID + " " + docs[i].businessEntityName;
-			  
-            }
+			  }
 			$scope.data = docs;
 			$defer.resolve(docs);
           }
@@ -266,7 +260,7 @@ angular.module('InspectionsViewerApp.directives', [])
     });
 	},
 	template: '<div loading-container="tableParams.settings().$loading">'+
-		'<gmaps class="bigmap" markers="data"></gmaps>' +
+		'<gmaps class="bigmap" markers="data" center="defaultCenter" zoom="defaultZoom"></gmaps>' +
 		//'<google-map class="bigmap" center="defaultCenter" zoom="defaultZoom">' +
 		//	'<marker ng-repeat="marker in data" coords="marker.position" options="marker.options"></marker>' +
 		//'</google-map>' +
@@ -304,10 +298,11 @@ angular.module('InspectionsViewerApp.directives', [])
             '<td data-title="\'PSČ\'" sortable="postalCode" filter="{ \'postalCode\': \'text\' }">'+
                     '{{check.postalCode}}'+
 			'</td>'+
-            '<td class="smallmap" data-title="\'Mapa\'">'+
-//				'<google-map center="check.center" zoom="check.zoom">' +
-//					'<marker coords="check.position"></marker>' +
-//				'</google-map>' +
+            '<td data-title="\'Mapa\'">'+
+				'<gmaps class="smallmap" markers="[check]" center="check.center" zoom="check.zoom"></gmaps>'+
+			//				'<google-map center="check.center" zoom="check.zoom">' +
+			//					'<marker coords="check.position"></marker>' +
+			//				'</google-map>' +
 				'<span ng-bind-html="check.maphtml"></span>'+
 			'</td>'+
           '</tr>'+
