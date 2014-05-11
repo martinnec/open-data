@@ -51,6 +51,10 @@
   max-width: 30em;
 }
 
+.boxic {
+	font-weight: bold;
+}
+
 /* ngtable */
 .loading-container {
     position: relative;
@@ -71,8 +75,19 @@
 }
 /* end of ngtable */
 
-#footer-logo {
-	width: 20em;
+#logolist {
+	list-style: none;
+}
+#logolist li {
+	display: inline;
+	margin-right: 5em;
+}
+
+#footer-logo-odcz {
+	width: 15em;
+}
+#footer-logo-mff {
+	height: 7em;
 }
 #loading {
 	width:auto;

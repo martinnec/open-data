@@ -46,6 +46,10 @@ angular.module('InspectionsViewerApp.controllers', [])
       //results of the search query executed on the SOLR instance
       $scope.results = [];
       
+	  
+      $scope.zoom = 0;
+      $scope.center = {lat: 49, lng: 15};
+
 	  document.getElementById("nav-tabulka").removeAttribute("class");
 	  document.getElementById("nav-mapa").setAttribute("class","active");
 	  document.getElementById("nav-sources").removeAttribute("class");
