@@ -38,7 +38,8 @@
 }
 .smallmap  { height: 15em; width: 15em; }
 
-.bigmap  { height: 20em; width: 100%; }
+.angular-google-map-container { height: 45em; width: 100%; }
+.bigmap  { height: 45em; width: 100%; }
 
 /* Custom page footer */
 .footer {
