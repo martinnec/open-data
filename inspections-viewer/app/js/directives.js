@@ -223,7 +223,7 @@ angular.module('InspectionsViewerApp.directives', [])
 					'<dt class="dt-none">Jméno subjektu<dt><dd class="bold">' + docs[i].businessEntityName + '</dd>' +
 					'<dt class="dt-none">Adresa</dt><dd>' + docs[i].street + '<br/>' + docs[i].postalCode + ' ' + docs[i].locality + '<br/>' + docs[i].region + '</dd><br/>' +
 					(docs[i].sanctionResource ? '<dt class="dt-inline">Sankce<dt><dd class="dd-inline"><a target="_blank" href="' + docs[i].sanctionResource + '"><span class="glyphicon glyphicon-new-window"></span> ' + docs[i].sanctionValue + ' CZK</a></dd><br/><br/>' : "" ) +
-					(docs[i].agentResource ? '<dt class="dt-none">Kontrolní orgán</dt><dd class="dd-inline"><a target="_blank" href="' + docs[i].agentResource + '"><span class="glyphicon glyphicon-new-window"></span> ' + docs[i].agentResource + '</a></dd><br/>' : "" ) +
+					(docs[i].agentResource ? '<dt class="dt-none">Kontrolní orgán</dt><dd class="dd-inline"><a target="_blank" href="' + docs[i].agentResource + '"><span class="glyphicon glyphicon-new-window"></span> ' + (docs[i].agentResource == "http://www.coi.cz/" ? "ČOI" : docs[i].agentResource) + '</a></dd><br/>' : "" ) +
 					'<dt class="dt-none">Datum kontroly</dt><dd class="dd-inline"><a target="_blank" href="http://linked.opendata.cz/resource/domain/coi.cz/check-action/' + docs[i].checkActionID + '"><span class="glyphicon glyphicon-new-window"></span> ' + docs[i].checkDate.substring(0,10) + '</a></dd><br/>' +
 					'</dl>'
 				  ;
