@@ -3,94 +3,6 @@
 /* Directives */
 
 angular.module('InspectionsViewerApp.directives', [])
-/*  .directive('inspectionsSearchResult', function() {
-    return {
-      template: '<div><ul class="list-group">' +
-                '  <li ng-repeat="doc in results.docs" class="list-group-item">' +
-                '    <a href="#/business-entities/{{doc[\'businessEntityID\']}}">{{doc["businessEntityName"]}} ({{doc["businessEntityID"]}})</a><br/>' +
-                '  </li>' +
-                '</ul></div>'
-    }
-  })*/
-/*  .directive('inspectionsSearchTypeahead', function() {
-    return {
-      controller: function($scope, $http) {
-        console.log('Typeahead controller start');
-        $scope.getBEs = function(val) {
-          if ( val != null && val.length > 2 )  {
-            return $http(
-              {method: 'JSONP',
-               url: 'http://ruian.linked.opendata.cz:8080/solr/collection1/query',
-               // @TODO : $scope.query should be inspected and escaped
-               params:{'json.wrf': 'JSON_CALLBACK',
-                      'q': 'businessEntityName:' + val + '* OR businessEntityID:' + val + '*',
-                      'rows': '500000',
-                      'fl': 'businessEntityName businessEntityID',
-                      'group': 'true',
-                      'group.field': 'businessEntityID',
-                      'group.main': 'true'}
-              }
-            ).then(function(res) {
-                var docs = res.data.response.docs;
-                console.log('search success!');
-                return docs;
-              }
-            );
-          } else {
-            return {docs: [], numFound: 0 };
-          }
-        };
-      },
-      template: '<form class="navbar-form navbar-left" role="search" action="#/business-entities">' +
-                '  <div class="form-group">' +
-				'    <input type="text" ng-model="asyncSelected" placeholder="Typeahead"' + '      typeahead="be.businessEntityID as (be.businessEntityID + \': \' + be.businessEntityName ) for be in getBEs($viewValue)"' + ' typeahead-loading="loadingLocations" class="form-control">' +
-				' <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>' +
-                '  </div>' +
-                '  <button type="submit" class="btn btn-default">Submit</button>' +
-                '</form>'
-    }  
-})*/
-/*  .directive('inspectionsSearch', function() {
-    return {
-      controller: function($scope, $http) {
-        console.log('Searching for ' + $scope.query);
-        $scope.$watch('query', function() {
-          if ( $scope.query != null && $scope.query.length > 2 )  {
-            $http(
-              {method: 'JSONP',
-               url: 'http://ruian.linked.opendata.cz:8080/solr/collection1/query',
-               // @TODO : $scope.query should be inspected and escaped
-               params:{'json.wrf': 'JSON_CALLBACK',
-                      'q': 'businessEntityName:' + $scope.query + '* OR businessEntityID:' + $scope.query + '*',
-                      'rows': '500000',
-                      'fl': 'businessEntityName businessEntityID',
-                      'group': 'true',
-                      'group.field': 'businessEntityID',
-                      'group.main': 'true'}
-              }
-            ).success(function(data) {
-                var docs = data.response.docs;
-                console.log('search success!');
-                $scope.results.docs = docs;
-                $scope.results.numFound = data.response.numFound;
-              }
-            ).error(function() {
-                console.log('Search failed!');
-              }
-            );
-          } else {
-            $scope.results = {docs: [], numFound: 0};
-          }
-        });
-      },
-      template: '<form class="navbar-form navbar-left" role="search">' +
-                '  <div class="form-group">' +
-                '    <input ng-model="query" type="text" class="form-control" placeholder="Search">' +
-                '  </div>' +
-                '  <button type="submit" class="btn btn-default">Submit</button>' +
-                '</form>'
-    }
-  })*/
 .directive('inspectionResultsTable', function() {
 	return {
 		controller: function($scope, $timeout, $resource, $http, ngTableParams) {
@@ -306,13 +218,13 @@ angular.module('InspectionsViewerApp.directives', [])
 				  };
 				  docs[i].title = docs[i].businessEntityName;
 				  docs[i].description = 
-					'<dl>' + 
-					'<dt>' + docs[i].businessEntityName + '</dt>' +
-					'<dd>' + docs[i].street + '<br/>' + docs[i].postalCode + ' ' + docs[i].locality + '<br/>' + docs[i].region + '</dd><br/>' +
-					'<dt><a target="_blank" href="http://linked.opendata.cz/resource/business-entity/CZ'+docs[i].businessEntityID+'"><span class="glyphicon glyphicon-new-window"></span> ' + docs[i].businessEntityID + '</a></dt>' +
-					'<dt><a target="_blank" href="http://linked.opendata.cz/resource/domain/coi.cz/check-action/' + docs[i].checkActionID + '"><span class="glyphicon glyphicon-new-window"></span> ' + docs[i].checkDate.substring(0,10) + '</a></dt>' +
-					(docs[i].sanctionResource ? '<dt><a target="_blank" href="' + docs[i].sanctionResource + '"><span class="glyphicon glyphicon-new-window"></span> ' + docs[i].sanctionValue + ' CZK</a></dt>' : "" ) +
-					(docs[i].agentResource ? '<dt><a target="_blank" href="' + docs[i].agentResource + '"><span class="glyphicon glyphicon-new-window"></span> ' + docs[i].agentResource + '</a></dt>' : "" ) +
+					'<dl class="mapwindow">' + 
+					'<dt class="dt-inline">IČ</dt><dd class="bold dd-inline"><a target="_blank" href="http://linked.opendata.cz/resource/business-entity/CZ'+docs[i].businessEntityID+'"><span class="glyphicon glyphicon-new-window"></span> ' + docs[i].businessEntityID + '</a></dd><br/>' +
+					'<dt class="dt-none">Jméno subjektu<dt><dd class="bold">' + docs[i].businessEntityName + '</dd>' +
+					'<dt class="dt-none">Adresa</dt><dd>' + docs[i].street + '<br/>' + docs[i].postalCode + ' ' + docs[i].locality + '<br/>' + docs[i].region + '</dd><br/>' +
+					(docs[i].sanctionResource ? '<dt class="dt-inline">Sankce<dt><dd class="dd-inline"><a target="_blank" href="' + docs[i].sanctionResource + '"><span class="glyphicon glyphicon-new-window"></span> ' + docs[i].sanctionValue + ' CZK</a></dd><br/><br/>' : "" ) +
+					(docs[i].agentResource ? '<dt class="dt-none">Kontrolní orgán</dt><dd class="dd-inline"><a target="_blank" href="' + docs[i].agentResource + '"><span class="glyphicon glyphicon-new-window"></span> ' + docs[i].agentResource + '</a></dd><br/>' : "" ) +
+					'<dt class="dt-none">Datum kontroly</dt><dd class="dd-inline"><a target="_blank" href="http://linked.opendata.cz/resource/domain/coi.cz/check-action/' + docs[i].checkActionID + '"><span class="glyphicon glyphicon-new-window"></span> ' + docs[i].checkDate.substring(0,10) + '</a></dd><br/>' +
 					'</dl>'
 				  ;
 				  }
@@ -335,87 +247,6 @@ angular.module('InspectionsViewerApp.directives', [])
 		'<div id="zoom" class="hide">Zazoomujte</div>' +
 		'<div class="{{rows < totalNumber? \'alert alert-info\' : \'alert alert-success\'}}">Zobrazuji {{rows < totalNumber? rows : totalNumber}} kontrol z celkových {{totalNumber}} v aktuální mapové oblasti.{{rows < totalNumber ? \'Pokud chcete zobrazit všechny kontroly, zazoomujte tak, aby jich v oblasti bylo méně než \' + rows + \'.\' : \'\'}}</div>' +		
 		'<gmaps class="bigmap" markers="data" center="defaultCenter" zoom="defaultZoom" zoom-changed="zoomChanged(zoom)" bounds-changed="boundsChanged(bounds)" center-changed="centerChanged(center)"></gmaps>' +
-    '</div>'
-	}
-})
-.directive('inspectionsOnMap', function() {
-	return {
-		controller: function($scope, $timeout, $resource, $http) {
-		$scope.data = [];
-		$scope.defaultZoom = 7;
-		$scope.defaultCenter = {
-			latitude: 49.8037633,
-			longitude: 15.4749126
-		};
-		$scope.$watch('defaultCenter', function () {
-			$scope.updateData();
-		} );
-		$scope.$watch('defaultZoom', function () {
-			$scope.updateData();
-		} );
-		
-		$scope.updateData = function () {
-			if ($scope.defaultZoom > 12) {
-				var distance = 3;
-				var filterparam = [];
-				var centerpt = $scope.defaultCenter.latitude + ' ' + $scope.defaultCenter.longitude;
-				filterparam.push('{!geofilt sfield=coords}');
-
-				var sparams = {'json.wrf': 'JSON_CALLBACK',
-					  'q': '*:*',
-					  'fq': filterparam,
-					  'd': distance,
-					  'rows': 10000,
-					  'spatial': true,
-					  'pt': centerpt
-					  };
-
-				$http(
-				  {method: 'JSONP',
-				   url: 'http://ruian.linked.opendata.cz/solr/collection1/query',
-				   params: sparams
-				  }
-				).success(function(data) {
-					var docs = data.response.docs;
-					console.log('search success!');
-					
-					for (var i = 0; i < docs.length; i++)  {
-					  
-					  docs[i].coordinates = {
-						latitude: docs[i].lat,
-						longitude: docs[i].lng
-					  };
-					  docs[i].latitude = docs[i].lat;
-					  docs[i].longitude = docs[i].lng;
-					  docs[i].title = docs[i].businessEntityName;
-					  docs[i].description = 
-						'<dl>' + 
-						'<dt>' + docs[i].businessEntityName + '</dt>' +
-						'<dd>' + docs[i].street + '<br/>' + docs[i].postalCode + ' ' + docs[i].locality + '<br/>' + docs[i].region + '</dd><br/>' +
-						'<dt><a target="_blank" href="http://linked.opendata.cz/resource/business-entity/CZ'+docs[i].businessEntityID+'"><span class="glyphicon glyphicon-new-window"></span> ' + docs[i].businessEntityID + '</a></dt>' +
-						'<dt><a target="_blank" href="http://linked.opendata.cz/resource/domain/coi.cz/check-action/' + docs[i].checkActionID + '"><span class="glyphicon glyphicon-new-window"></span> ' + docs[i].checkDate.substring(0,10) + '</a></dt>' +
-						(docs[i].sanctionResource ? '<dt><a target="_blank" href="' + docs[i].sanctionResource + '"><span class="glyphicon glyphicon-new-window"></span> ' + docs[i].sanctionValue + ' CZK</a></dt>' : "" ) +
-						(docs[i].agentResource ? '<dt><a target="_blank" href="' + docs[i].agentResource + '"><span class="glyphicon glyphicon-new-window"></span> ' + docs[i].agentResource + '</a></dt>' : "" ) +
-						'</dl>'
-					  ;
-					  }
-					$scope.data = docs;
-				}
-				).error(function() {
-					console.log('Search failed!');
-				}
-				);
-			}
-			}
-			$scope.updateData();		
-	},
-	template: '<div>'+
-		'<div id="zoom" class="hide">Zazoomujte</div>' +
-		'<google-map center="defaultCenter" zoom="defaultZoom" draggable="true">'+
-			//'<marker ng-repeat="marker in data" coords="marker"></marker>' +
-			'<markers models="data" coords="\'self\'" ' + 'doCluster="true"' + '></markers>' +
-		'</google-map>' +
-		//'<gmaps class="bigmap" markers="data" center="defaultCenter" zoom="defaultZoom" zoom-changed="zoomChanged(zoom)" center-changed="centerChanged(center)"></gmaps>' +
     '</div>'
 	}
 })

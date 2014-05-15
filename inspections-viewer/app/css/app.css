@@ -31,7 +31,18 @@
   content: "";
   padding: 0;
 }
-
+.dd-inline {
+	display:inline;
+}
+.dt-none {
+	display:none;
+}
+.dt-inline {
+	display:inline;
+}
+.dt-inline:after {
+	content: ": ";
+}
 .search-container {
 	padding-left:1em;
 	padding-right:1em;
@@ -52,7 +63,7 @@
   max-width: 30em;
 }
 
-.boxic {
+.bold {
 	font-weight: bold;
 }
 
