@@ -333,7 +333,7 @@ angular.module('InspectionsViewerApp.directives', [])
 	},
 	template: '<div>'+
 		'<div id="zoom" class="hide">Zazoomujte</div>' +
-		'<div>Zobrazuji {{rows < totalNumber? rows : totalNumber}} kontrol z celkových {{totalNumber}} v aktuální mapové oblasti. Pokud chcete zobrazit všechny kontroly, zazoomujte tak, aby jich v oblasti bylo méně než {{rows}}.</div>' +		
+		'<div class="{{rows < totalNumber? \'alert alert-info\' : \'alert alert-success\'}}">Zobrazuji {{rows < totalNumber? rows : totalNumber}} kontrol z celkových {{totalNumber}} v aktuální mapové oblasti.{{rows < totalNumber ? \'Pokud chcete zobrazit všechny kontroly, zazoomujte tak, aby jich v oblasti bylo méně než \' + rows + \'.\' : \'\'}}</div>' +		
 		'<gmaps class="bigmap" markers="data" center="defaultCenter" zoom="defaultZoom" zoom-changed="zoomChanged(zoom)" bounds-changed="boundsChanged(bounds)" center-changed="centerChanged(center)"></gmaps>' +
     '</div>'
 	}
