@@ -29,14 +29,13 @@ angular.module('InspectionsViewerApp.directives', [])
 				var tokens = params.filter()[column].trim().split(' ');
 				var paramfilter = "";
 				var count = 0;
-				for (var token in tokens) {
-					if (count == 0) {
-						paramfilter += column + ':*' + tokens[token] + '*';
+				for (var i = 0; i < tokens.length; i++) {
+					if (i == 0) {
+						paramfilter += column + ':*' + tokens[i] + '*';
 					}
 					else {
-						paramfilter += ' AND ' + column + ':*' + tokens[token] + '*';
+						paramfilter += ' AND ' + column + ':*' + tokens[i] + '*';
 					}
-					count++;
 				}
 				filterparam.push(paramfilter);
 			}
