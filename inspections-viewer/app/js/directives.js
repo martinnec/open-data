@@ -5,8 +5,8 @@
 angular.module('InspectionsViewerApp.directives', [])
 .directive('inspectionResultsTable', function() {
 	return {
-		controller: function($scope, $timeout, $resource, $http, ngTableParams) {
-    $scope.tableParams = new ngTableParams({
+		controller: function($scope, $timeout, $resource, $http, $window, $location, ngTableParams) {
+	$scope.tableParams = new ngTableParams({
         page: 1,            // show first page
         count: 10,          // count per page
 		filterDelay: 1500,
@@ -41,7 +41,6 @@ angular.module('InspectionsViewerApp.directives', [])
 			}
 			//if (params.filter()[column] != '') filterparam.push(column + ':*' + (params.filter()[column]) + '*');
 		}
-			
 		$http(
           {method: 'JSONP',
            url: 'http://ruian.linked.opendata.cz/solr/collection1/query',
@@ -54,6 +53,10 @@ angular.module('InspectionsViewerApp.directives', [])
 				  }
           }
         ).success(function(data) {
+			$window.ga('send', 'event', {
+					'eventCategory': 'TableSearch',
+					'eventAction': data.responseHeader.params.fq
+			});
 			var docs = data.response.docs;
             console.log('search success!');
             params.total(data.response.numFound);
@@ -141,7 +144,7 @@ angular.module('InspectionsViewerApp.directives', [])
 })
 .directive('inspectionResultsMaps', function() {
 	return {
-		controller: function($scope, $timeout, $resource, $http/*, ngTableParams*/) {
+		controller: function($scope, $timeout, $resource, $http, $window, $location) {
 		$scope.defaultZoom = 7;
 		$scope.defaultCenter = {
 			lat: 49.8037633,
@@ -208,6 +211,11 @@ angular.module('InspectionsViewerApp.directives', [])
 				).success(function(data) {
 				var docs = data.response.docs;
 				//console.log('search success!');
+
+				$window.ga('send', 'event', {
+						'eventCategory': 'MapSearch',
+						'eventAction': data.responseHeader.params.fq
+				});
 				
 				for (var i = 0; i < docs.length; i++)  {
 				  
