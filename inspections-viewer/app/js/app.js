@@ -20,7 +20,7 @@ angular.module('InspectionsViewerApp', [
         templateUrl: 'app/partials/maps.html',
         controller: 'MapController'      
       }).
-      when('/zdroje', {
+      when('/o-aplikaci', {
         templateUrl: 'app/partials/sources.html',
         controller: 'SourcesController'      
       }).
