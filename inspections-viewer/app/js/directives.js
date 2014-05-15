@@ -87,7 +87,7 @@ angular.module('InspectionsViewerApp.directives', [])
                     '<a target="_blank" href="http://linked.opendata.cz/resource/domain/coi.cz/check-action/{{check.checkActionID}}"><span class="glyphicon glyphicon-new-window"></span> {{check.checkDate.substring(0,10)}}</a>'+
 			'</td>'+
             '<td data-title="\'IČ\'" filter="{ \'businessEntityID\': \'text\' }" sortable="businessEntityID">'+
-                    '<a target="_blank" href="http://linked.opendata.cz/resource/business-entity/CZ{{check.businessEntityID}}"><span class="glyphicon glyphicon-new-window"></span> {{check.businessEntityID}}</a>'+
+                    '<a ng-show="check.businessEntityID" target="_blank" href="http://linked.opendata.cz/resource/business-entity/CZ{{check.businessEntityID}}"><span class="glyphicon glyphicon-new-window"></span> {{check.businessEntityID}}</a>'+
 			'</td>'+
             '<td data-title="\'Jméno subjektu\'" filter="{ \'businessEntityName\': \'text\' }" sortable="businessEntityName">'+
                     '{{check.businessEntityName}}'+
@@ -218,9 +218,9 @@ angular.module('InspectionsViewerApp.directives', [])
 				  docs[i].title = docs[i].businessEntityName;
 				  docs[i].description = 
 					'<dl class="mapwindow">' + 
-					'<dt class="dt-inline">IČ</dt><dd class="bold dd-inline"><a target="_blank" href="http://linked.opendata.cz/resource/business-entity/CZ'+docs[i].businessEntityID+'"><span class="glyphicon glyphicon-new-window"></span> ' + docs[i].businessEntityID + '</a></dd><br/>' +
-					'<dt class="dt-none">Jméno subjektu<dt><dd class="bold">' + docs[i].businessEntityName + '</dd>' +
-					'<dt class="dt-none">Adresa</dt><dd>' + docs[i].street + '<br/>' + docs[i].postalCode + ' ' + docs[i].locality + '<br/>' + docs[i].region + '</dd><br/>' +
+					(docs[i].businessEntityID ? '<dt class="dt-inline">IČ</dt><dd class="bold dd-inline"><a target="_blank" href="http://linked.opendata.cz/resource/business-entity/CZ'+docs[i].businessEntityID+'"><span class="glyphicon glyphicon-new-window"></span> ' + docs[i].businessEntityID + '</a></dd><br/>' : "" ) +
+					(docs[i].businessEntityName ? '<dt class="dt-none">Jméno subjektu<dt><dd class="bold">' + docs[i].businessEntityName + '</dd>' : "" ) +
+					(docs[i].street ? '<dt class="dt-none">Adresa</dt><dd>' + docs[i].street + '<br/>' + docs[i].postalCode + ' ' + docs[i].locality + '<br/>' + docs[i].region + '</dd><br/>': '<dt class="dt-none">Adresa</dt><dd>' + docs[i].region + '</dd><br/>' ) +
 					(docs[i].sanctionResource ? '<dt class="dt-inline">Sankce<dt><dd class="dd-inline"><a target="_blank" href="' + docs[i].sanctionResource + '"><span class="glyphicon glyphicon-new-window"></span> ' + docs[i].sanctionValue + ' CZK</a></dd><br/><br/>' : "" ) +
 					(docs[i].agentResource ? '<dt class="dt-none">Kontrolní orgán</dt><dd class="dd-inline"><a target="_blank" href="' + docs[i].agentResource + '"><span class="glyphicon glyphicon-new-window"></span> ' + (docs[i].agentResource == "http://www.coi.cz/" ? "ČOI" : docs[i].agentResource) + '</a></dd><br/>' : "" ) +
 					'<dt class="dt-none">Datum kontroly</dt><dd class="dd-inline"><a target="_blank" href="http://linked.opendata.cz/resource/domain/coi.cz/check-action/' + docs[i].checkActionID + '"><span class="glyphicon glyphicon-new-window"></span> ' + docs[i].checkDate.substring(0,10) + '</a></dd><br/>' +
