@@ -113,9 +113,23 @@ angular.module('InspectionsViewerApp.directives', [])
 		
 		var filterparam = [];
 		for (var column in params.filter()) {
-        if (params.filter()[column] != '') filterparam.push(column + ':*' + (params.filter()[column].trim().replace(/\s+/, "* AND *")) + '*');
-				//if (params.filter()[column] != '') filterparam.push(column + ':*' + (params.filter()[column]) + '*');
-    }
+			if (params.filter()[column] != '') {
+				var tokens = params.filter()[column].trim().split(' ');
+				var paramfilter = "";
+				var count = 0;
+				for (var token in tokens) {
+					if (count == 0) {
+						paramfilter += column + ':*' + tokens[token] + '*';
+					}
+					else {
+						paramfilter += ' AND ' + column + ':*' + tokens[token] + '*';
+					}
+					count++;
+				}
+				filterparam.push(paramfilter);
+			}
+			//if (params.filter()[column] != '') filterparam.push(column + ':*' + (params.filter()[column]) + '*');
+		}
 			
 		$http(
           {method: 'JSONP',
@@ -137,6 +151,7 @@ angular.module('InspectionsViewerApp.directives', [])
               if (docs[i].lat) {
 				  docs[i].zoom = 14;
 				  docs[i].maphtml = '<a target="_blank" href="http://maps.google.com/?ie=UTF8&q=' + docs[i].lat +','+docs[i].lng+'&ll='+docs[i].lat+','+docs[i].lng+'&z='+docs[i].zoom+'"><span class="glyphicon glyphicon-new-window"></span> Mapa</a>';
+				  docs[i].agent = docs[i].agentResource == "http://www.coi.cz/" ? "ČOI" : undefined;
 			  }
             }
 			$defer.resolve(docs);
@@ -170,7 +185,7 @@ angular.module('InspectionsViewerApp.directives', [])
                     '<a target="_blank" href="{{check.sanctionResource}}">{{check.sanctionValue}}{{check.sanctionValue ? " CZK" : ""}}</a>'+
 			'</td>'+
             '<td data-title="\'Kontrolní orgán\'" >'+
-                    '<a target="_blank" href="{{check.agentResource}}"><span class="glyphicon glyphicon-new-window"></span> {{check.agentResource}}</a>'+
+                    '<a target="_blank" href="{{check.agentResource}}"><span class="glyphicon glyphicon-new-window"></span> {{check.agent ? check.agent : check.agentResource}}</a>'+
 			'</td>'+
             '<td data-title="\'Ulice\'" sortable="street" filter="{ \'street\': \'text\' }">'+
                     '{{check.street}}'+
