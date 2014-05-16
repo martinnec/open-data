@@ -58,7 +58,7 @@ angular.module('InspectionsViewerApp.directives', [])
 					'eventAction': data.responseHeader.params.fq
 			});
 			var docs = data.response.docs;
-            console.log('search success!');
+            //console.log('search success!');
             params.total(data.response.numFound);
 			
 			for (var i = 0; i < docs.length; i++)  {
@@ -70,10 +70,14 @@ angular.module('InspectionsViewerApp.directives', [])
             }
 			$defer.resolve(docs);
           }
-        ).error(function() {
-            console.log('Search failed!');
-          }
-        );
+		).error(function(data, status) {
+			$window.ga('send', 'event', {
+					'eventCategory': 'TableSearchFail',
+					'eventAction': status + ': ' + data.error.msg
+			});
+			console.log('Search failed!');
+		  }
+		);
         }
     });
 	},
@@ -239,7 +243,11 @@ angular.module('InspectionsViewerApp.directives', [])
 				$scope.totalNumber = data.response.numFound;
 				$scope.data = docs;
 			  }
-			).error(function() {
+			).error(function(data, status) {
+				$window.ga('send', 'event', {
+						'eventCategory': 'MapSearchFail',
+						'eventAction': status + ': ' + data.error.msg
+				});
 				console.log('Search failed!');
 			  }
 			);
