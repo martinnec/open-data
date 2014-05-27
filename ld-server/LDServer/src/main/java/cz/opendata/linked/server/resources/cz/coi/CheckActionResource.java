@@ -1,12 +1,15 @@
 package cz.opendata.linked.server.resources.cz.coi;
 
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.json.Json;
+import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonWriter;
@@ -232,6 +235,8 @@ public class CheckActionResource {
     	Resource detailedResource = model.getResource(resourceURI);
     	jsonResultBuilder.add("@id", resourceURI);
     	
+    	Map<String, List<String>> resourceData = new HashMap<String, List<String>>();
+    	
     	StmtIterator stmti = detailedResource.listProperties();
     	while ( stmti.hasNext() )	{
     		
@@ -258,13 +263,36 @@ public class CheckActionResource {
     			jsonldContext.put(jsonPredicate, predicateURI);
     		}
     		
-    		if ( stmt.getObject().isResource() )	{
-    			jsonResultBuilder.add(jsonPredicate, this.prepareJsonObjectBuilder(model, stmt.getObject().asResource().getURI(), jsonldContext));
+    		List<String> propertyValues = null;
+    		if ( !resourceData.containsKey(jsonPredicate) )	{
+    			propertyValues = new ArrayList<String>();
+    			resourceData.put(jsonPredicate, propertyValues);
     		} else {
-    			jsonResultBuilder.add(jsonPredicate, stmt.getObject().asLiteral().getString());
+    			propertyValues = resourceData.get(jsonPredicate);
+    		}
+    		
+    		if ( stmt.getObject().isResource() )	{
+//    			jsonResultBuilder.add(jsonPredicate, this.prepareJsonObjectBuilder(model, stmt.getObject().asResource().getURI(), jsonldContext));
+    			propertyValues.add(stmt.getObject().asResource().getURI());
+    		} else {
+//    			jsonResultBuilder.add(jsonPredicate, stmt.getObject().asLiteral().getString());
+    			propertyValues.add(stmt.getObject().asLiteral().getString());
     		}
     		
     	}
+    	
+    	for (String jsonPredicate : resourceData.keySet()) {
+    		List<String> propertyValues = resourceData.get(jsonPredicate);
+    		JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
+    		for (String value : propertyValues) {
+				if ( value.startsWith("http:") )	{
+					jsonArrayBuilder.add(this.prepareJsonObjectBuilder(model, value, jsonldContext));
+				} else {
+					jsonArrayBuilder.add(value);
+				}
+			}
+    		jsonResultBuilder.add(jsonPredicate, jsonArrayBuilder);
+		}
     	
     	return jsonResultBuilder;
     }
