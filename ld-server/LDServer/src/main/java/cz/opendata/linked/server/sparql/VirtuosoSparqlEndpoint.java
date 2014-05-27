@@ -14,7 +14,7 @@ import org.apache.log4j.Logger;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 
-public class SparqlEndpoint {
+public class VirtuosoSparqlEndpoint {
 	
 	private String endpointURL = "http://internal.opendata.cz:8890/sparql";
 	
@@ -22,7 +22,7 @@ public class SparqlEndpoint {
 	
 	private URLConnection sparqlEndpointConn;
 	
-	private Logger logger = Logger.getLogger(SparqlEndpoint.class);
+	private Logger logger = Logger.getLogger(VirtuosoSparqlEndpoint.class);
 	
 	private Model model = ModelFactory.createDefaultModel();
 		
@@ -32,13 +32,13 @@ public class SparqlEndpoint {
 	
 	private int connectionTimeout = 30000;
 	
-	public SparqlEndpoint(String sparqlEndpointURL)	{
+	public VirtuosoSparqlEndpoint(String sparqlEndpointURL)	{
 		
 		this.endpointURL = sparqlEndpointURL;
 		
 	}
 	
-	public SparqlEndpoint(String endpointURL, int connectionTimeout)	{
+	public VirtuosoSparqlEndpoint(String endpointURL, int connectionTimeout)	{
 		
 		this.endpointURL = endpointURL;
 		this.connectionTimeout = connectionTimeout;

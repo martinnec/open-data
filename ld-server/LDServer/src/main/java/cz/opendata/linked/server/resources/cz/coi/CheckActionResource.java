@@ -25,7 +25,7 @@ import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 
 import cz.opendata.linked.server.sparql.QueryHasTooManyResults;
-import cz.opendata.linked.server.sparql.SparqlEndpoint;
+import cz.opendata.linked.server.sparql.VirtuosoSparqlEndpoint;
 import cz.opendata.linked.server.sparql.UnableToExecuteSPARQLQuery;
 
 /**
@@ -34,7 +34,7 @@ import cz.opendata.linked.server.sparql.UnableToExecuteSPARQLQuery;
 @Path("check-action")
 public class CheckActionResource {
 
-	private SparqlEndpoint ep = new SparqlEndpoint("http://linked.opendata.cz/sparql");
+	private VirtuosoSparqlEndpoint ep = new VirtuosoSparqlEndpoint("http://linked.opendata.cz/sparql");
 	
 	private static Map<String, String> prefixes = new HashMap<String, String>();
 	static	{
