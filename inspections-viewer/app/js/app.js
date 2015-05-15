@@ -2,7 +2,7 @@
 
 // Declare app level module which depends on filters, and services
 angular.module('InspectionsViewerApp', [
-  'ngRoute', /*'google-maps',*/ 'ngResource','ngTable', 'ngSanitize','ngTableExport',
+  'ngRoute', /*'google-maps',*/ 'ngResource','ngTable', 'ngSanitize',
   'InspectionsViewerApp.filters',
   'InspectionsViewerApp.services',
   'InspectionsViewerApp.directives',
